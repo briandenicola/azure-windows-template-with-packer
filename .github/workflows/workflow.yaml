@@ -1,0 +1,16 @@
+name: Packer
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Manual GitHub Actions deployment to build Packer images'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: packer build packer.json
+        uses: docker://hashicorp/packer:1.4.3
+        with:
+          args: build -var "azure_subscription_id=${{ secrets.ARM_SUBSCRIPTION_ID }}"" -var "azure_client_id=${{ secrets.ARM_CLIENT_ID }}" -var "azure_tenant_id=${{ secrets.ARM_TENANT_ID  }}" -var "azure_client_secret=${{ secrets.ARM_CLIENT_SECRET }}"  windows_server_2019.json 
