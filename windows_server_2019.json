@@ -8,11 +8,7 @@
     "shared_image_name": "bjdWin2k19.core",
     "shared_image_version": "1.0.{{timestamp}}",
     "shared_image_regions": "centralus,southcentralus",
-    "public_key": "",
-    "azure_client_id": "",
-    "azure_client_secret": "",
-    "azure_tenant_id": "",
-    "azure_subscription_id": ""
+    "build_resource_group_name": "build_rg_bf70f92502f7"
   },
   "builders": [
     {
