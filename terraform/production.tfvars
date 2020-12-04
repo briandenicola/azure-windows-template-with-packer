@@ -1,0 +1,7 @@
+shared_image_subscription_id = ""
+image_version  = "1.0.1"
+image_name = "bjdWin2k19.core"
+gallery_name = "BjdAzureDemoGallery"
+gallery_resource_group = "Core_Infra_Templates_RG"
+virtual_network_name_resource_group = "DevSub02_Network_RG"
+virtual_network_name = "DevSub02-VNet-002"
