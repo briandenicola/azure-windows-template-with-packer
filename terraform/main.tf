@@ -10,8 +10,10 @@ provider "azurerm" {
   features        {}
 }
 
-resource "random_id" "id" {
-  byte_length = 4
+resource "random_string" "id" {
+  length  = 5
+  special = false
+  upper   = false
 }
 
 resource "random_password" "password" {
@@ -39,7 +41,7 @@ resource "azurerm_resource_group" "client" {
 }
 
 resource "azurerm_network_interface" "client" {
-  name                = "${random_id.id.id}-nic"
+  name                = "${random_string.id.result}-nic"
   location            = azurerm_resource_group.client.location
   resource_group_name = azurerm_resource_group.client.name
 
@@ -51,7 +53,7 @@ resource "azurerm_network_interface" "client" {
 }
 
 resource "azurerm_windows_virtual_machine" "client" {
-  name                = "vm-${random_id.id.id}"
+  name                = "vm-${random_string.id.result}"
   resource_group_name = azurerm_resource_group.client.name
   location            = azurerm_resource_group.client.location
   size                = var.vm_size
@@ -62,7 +64,7 @@ resource "azurerm_windows_virtual_machine" "client" {
   ]
 
   os_disk {
-    name                  = "${random_id.id.id}-osdisk" 
+    name                  = "${random_string.id.result}-osdisk" 
     caching               = "ReadWrite"
     storage_account_type  = "Premium_LRS"
   }
