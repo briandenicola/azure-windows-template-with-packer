@@ -53,7 +53,7 @@ resource "azurerm_network_interface" "client" {
 }
 
 resource "azurerm_windows_virtual_machine" "client" {
-  name                = "vm-${random_string.id.result}"
+  name                = "${random_string.id.result}-vm"
   resource_group_name = azurerm_resource_group.client.name
   location            = azurerm_resource_group.client.location
   size                = var.vm_size
