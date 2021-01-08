@@ -6,7 +6,7 @@ on:
       tags:
         description: 'Manual GitHub Actions deployment to build Packer images'
   schedule:
-    - cron:  '30 16 8 * *'
+    - cron:  '0 1 20 * *'
 
 jobs:
   build:
