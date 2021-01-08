@@ -7,3 +7,6 @@ A simple configuration to build a Azure Windows Server Core 2019 template with S
 # Deploy
 * terraform init 
 * terraform apply -var "shared_image_subscription_id=c19e7216-928e-4c6a-ad23-cdbc590e7072" -var-file productions.tfvars
+
+# Status
+![Packer Build](https://github.com/briandenicola/packer-windows2019-azure/workflows/Packer%20Build/badge.svg)
