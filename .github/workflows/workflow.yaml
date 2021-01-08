@@ -5,6 +5,8 @@ on:
     inputs:
       tags:
         description: 'Manual GitHub Actions deployment to build Packer images'
+  schedule:
+    - cron:  '0 13 8 * *'
 
 jobs:
   build:
