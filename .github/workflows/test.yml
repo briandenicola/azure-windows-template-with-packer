@@ -2,15 +2,13 @@
 
 name: ScheduleTest
 
-# Controls when the action will run. 
 on:
   schedule:
-  - cron: '*/15 * * * *'
+  - cron: '*/25 * * * *'
     
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: Run a one-line script
         run: echo Hello, world!
