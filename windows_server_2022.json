@@ -1,0 +1,82 @@
+{
+  "variables": {
+    "vm_size": "Standard_B4ms",
+    "template_resource_group": "Core_Infra_Templates_RG",
+    "template_name": "bjdWin2k22.core.{{timestamp}}",
+    "winrm_username": "packer",
+    "shared_image_gallery_name": "BjdAzureDemoGallery",
+    "shared_image_name": "bjdWin2k22.core",
+    "shared_image_version": "1.0.{{timestamp}}",
+    "shared_image_regions": "centralus,southcentralus",
+    "build_resource_group_name": "Core_Infra_Templates_RG"
+  },
+  "builders": [
+    {
+      "type": "azure-arm",
+
+      "client_id": "{{user `azure_client_id`}}",
+      "client_secret": "{{user `azure_client_secret`}}",
+      "tenant_id": "{{user `azure_tenant_id`}}",
+      "subscription_id": "{{user `azure_subscription_id`}}",
+  
+      "managed_image_resource_group_name": "{{user `template_resource_group`}}",
+      "managed_image_name": "{{user `template_name`}}",
+  
+      "os_type": "Windows",
+      "image_publisher": "MicrosoftWindowsServer",
+      "image_offer": "WindowsServer",
+      "image_sku": "2022-Datacenter-Core",
+  
+      "communicator": "winrm",
+      "winrm_use_ssl": true,
+      "winrm_insecure": true,
+      "winrm_timeout": "5m",
+      "winrm_username": "{{user `winrm_username`}}",
+      "build_resource_group_name": "{{user `build_resource_group_name`}}",
+      "vm_size": "{{user `vm_size`}}",
+
+      "shared_image_gallery_destination": {
+        "subscription": "{{user `azure_subscription_id`}}",
+        "resource_group": "{{user `template_resource_group`}}",
+        "gallery_name": "{{user `shared_image_gallery_name`}}",
+        "image_name": "{{user `shared_image_name`}}",
+        "image_version": "{{user `shared_image_version`}}",
+        "replication_regions": "{{user `shared_image_regions`}}"
+      }
+    }],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "scripts": [
+        "./scripts/configure-pwsh7.ps1"
+      ]
+    },
+    {
+      "type": "powershell",
+      "scripts": [
+        "./scripts/configure-updates.ps1"
+      ]
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "{{user `winrm_username`}}",
+      "elevated_password": "{{ build `Password`}}",
+      "scripts": [
+        "./scripts/configure-sshd.ps1"
+      ]
+    },
+    {
+      "type": "powershell",
+      "scripts": [
+        "./scripts/configure-shutdown.ps1"
+      ]
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "& $env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /quiet /quit",
+        "while($true) { $imageState = Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\State | Select ImageState; if($imageState.ImageState -ne 'IMAGE_STATE_GENERALIZE_RESEAL_TO_OOBE') { Write-Output $imageState.ImageState; Start-Sleep -s 10  } else { break } }"
+      ]
+    }
+  ]
+}
