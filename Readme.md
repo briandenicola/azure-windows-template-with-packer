@@ -1,12 +1,16 @@
 # Overview
 A simple configuration to build a Azure Windows Server Core template with SSH configured using Packer.
 
-# Build
-* .\build_windows_2019_azure.ps1 -SubscriptionId 0ca4429f-4dcc-4b70-8118-3cb6ad856f30 -ClientId 7a21d8-8b56-42a4-abff-8db4833430b4 -TenantId b7498-ba6e-4ffc-b146-9f3fced9f1b7  -ClientSecret $client_secret
+# Build 2019
+* [Trigger GitHub Action](https://github.com/briandenicola/azure-windows-template-with-packer/actions/workflows/workflow.yaml)
+
+# Build 2022
+* [Trigger GitHub Action](https://github.com/briandenicola/azure-windows-template-with-packer/actions/workflows/workflow2022.yaml)
 
 # Deploy
 * terraform init 
 * terraform apply -var "shared_image_subscription_id=c19e7216-928e-4c6a-ad23-cdbc590e7072" -var-file productions.tfvars
 
 # Status
-![Packer Build](https://github.com/briandenicola/packer-windows2019-azure/workflows/Packer%20Build/badge.svg)
+![Packer Build - 2019](https://github.com/briandenicola/azure-windows-template-with-packer/actions/workflows/workflow.yaml/badge.svg)
+![Packer Build - 2022](https://github.com/briandenicola/azure-windows-template-with-packer/actions/workflows/workflow2022.yaml/badge.svg)
