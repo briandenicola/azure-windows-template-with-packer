@@ -2,9 +2,6 @@ name: Packer Build - 2019
 
 on:
   workflow_dispatch:
-    inputs:
-      tags:
-        description: 'Manual GitHub Actions deployment to build Packer images'
   schedule:
     - cron:  '0 1 20 * *'
 
